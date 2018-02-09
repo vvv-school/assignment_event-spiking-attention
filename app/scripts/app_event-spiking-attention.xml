@@ -1,0 +1,141 @@
+<application>
+<name> event-spiking-attention </name>
+
+<dependencies>
+</dependencies>
+
+<module>
+  <name> event-saccadic-suppression </name>
+  <parameters> --name /vSacSup </parameters>
+  <node> localhost </node>
+</module>
+
+<module>
+  <name>vPreProcess</name>
+  <parameters> --flipx --flipy --split </parameters>
+  <node> localhost </node>
+</module>
+
+<module>
+  <name> event-spiking-attention </name>
+  <parameters> --name /vSpiking </parameters>
+  <node> localhost </node>
+</module>
+
+<module>
+  <name>vFramer</name>
+  <parameters>--name /vFramer --frameRate 20 --displays "(1 /stream (AE) 1 /attention (AE-INT))"</parameters>
+  <node> localhost </node>
+</module>
+
+<module>
+    <name>yarpview</name>
+    <parameters>--name /vviewstream --x 000 --y 600 --synch --w 608 --h 480 </parameters>
+    <node>localhost</node>
+</module>
+
+<module>
+    <name>yarpview</name>
+    <parameters>--name /vviewattention --x 700 --y 600 --synch --w 608 --h 480</parameters>
+    <node>localhost</node>
+</module>
+
+<module>
+  <name>yarpview</name>
+  <parameters>--name /icub/view/right --x 0 --y 0 --synch --w 640 --h 512 </parameters>
+  <node>localhost</node>
+</module>
+
+<module>
+  <name>yarpview</name>
+  <parameters>--name /vviewsubthreshold --x 700 --y 0 --synch --w 640 --h 512 </parameters>
+  <node>localhost</node>
+</module>
+
+<module>
+  <name> yarpscope </name>
+    <parameters> --remote /icub/torso/state:o --index "(0 1 2)" --x 1400 --y 0 --interval 200 </parameters>
+    <environment> YARP_PORT_PREFIX=/torso </environment>
+    <node>localhost</node>
+    <dependencies>
+    <port> /icub/torso/state:o </port>
+    </dependencies>
+</module>
+
+<module>
+    <name> yarpscope </name>
+    <parameters> --remote /icub/head/state:o --index "(0 1 2 3 4 5)" --x 1400 --y 600 --interval 200 </parameters>
+    <environment> YARP_PORT_PREFIX=/head </environment>
+    <node>localhost</node>
+    <dependencies>
+    <port> /icub/head/state:o </port>
+    </dependencies>
+</module>
+
+<connection>
+    <from>/icub/torso/state:o</from>
+    <to>/vSacSup/torso/state:i</to>
+    <protocol>udp</protocol>
+</connection>
+
+<connection>
+    <from>/icub/head/state:o</from>
+    <to>/vSacSup/head/state:i</to>
+    <protocol>udp</protocol>
+</connection>
+
+<connection>
+  <from>/zynqGrabber/vBottle:o</from>
+  <to>/vSacSup/vBottle:i</to>
+    <protocol>udp</protocol>
+</connection>
+
+<connection>
+    <from>/vSacSup/vBottle:o</from>
+    <to>/vPreProcess/vBottle:i</to>
+    <protocol>udp</protocol>
+</connection>
+
+<connection>
+    <from>/vPreProcess/right:o</from>
+    <to>/vSpiking/vBottle:i</to>
+    <protocol>udp</protocol>
+</connection>
+
+<connection>
+    <from>/vSpiking/vBottle:o</from>
+    <to>/vFramer/LAE:i</to>
+    <protocol>udp</protocol>
+</connection>
+
+<connection>
+    <from>/vPreProcess/right:o</from>
+    <to>/vFramer/AE:i</to>
+    <protocol>udp</protocol>
+</connection>
+
+<connection>
+    <from>/vFramer/stream</from>
+    <to>/vviewstream</to>
+    <protocol>udp</protocol>
+</connection>
+
+<connection>
+    <from>/vFramer/attention</from>
+    <to>/vviewattention</to>
+    <protocol>udp</protocol>
+</connection>
+
+<connection>
+  <from>/icub/camcalib/right/out</from>
+  <to>/icub/view/right</to>
+  <protocol>udp</protocol>
+</connection>
+
+<connection>
+  <from>/vSpiking/subthreshold:o</from>
+  <to>/vviewsubthreshold</to>
+  <protocol>udp</protocol>
+</connection>
+
+</application>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="Test Assignment Event Spiking Attention">
+    <description>Testing the assignment on the Event Spiking Attention </description>
+    <environment>  </environment>
+    <fixture param="--fixture fixture.xml"> yarpmanager </fixture>
+    <test type="dll"> TestAssignmentEventSpikingAttention </test>
+</suite>

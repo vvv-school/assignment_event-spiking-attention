@@ -1,0 +1,27 @@
+<application>
+    <name>Fixture for Assignment on Event Spiking Model</name>
+    <description>A fixture to prepare components required for the assignment</description>
+    <version>1.0</version>
+    <authors>
+        <author email="arren.glover@iit.it">Arren Glover</author>
+    </authors>
+
+    <module>
+        <name> event-saccadic-suppression </name>
+        <parameters> --name /vSacSup --threshold 0.01 </parameters>
+        <node> localhost </node>
+    </module>
+
+    <module>
+        <name> vPreProcess </name>
+        <parameters> --flipx --flipy --split </parameters>
+        <node> localhost </node>
+    </module>
+
+    <module>
+        <name> event-spiking-attention </name>
+        <parameters> --name /vSpiking </parameters>
+        <node>localhost</node>
+    </module>
+
+</application>
