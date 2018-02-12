@@ -29,7 +29,7 @@ The *saccadic suppression* module will be used remove events from the event-stre
 
 You can test your code on any of the provided event-driven [datasets]((https://github.com/vvv-school/tutorial_event-driven-framework) using the ``event-spiking-attention`` yarpmanager app. The final attention events will be visualised on a ``yarpview`` windows and should correspond to the position of the shaken object.
 
-When you are happy with your attention module, you can test your code **Automatically**: [running the script **test.sh**](https://github.com/vvv-school/vvv-school.github.io/blob/master/instructions/how-to-run-smoke-tests.md) in the **smoke-test** directory. The smoke-test will give a maximum of 5 marks.
+When you are happy with your attention module, you can test your code **Automatically**: [running the script **test.sh**](https://github.com/vvv-school/vvv-school.github.io/blob/master/instructions/how-to-run-smoke-tests.md) in the **smoke-test** directory. The smoke-test will give a maximum of 7 marks.
 
 ![results](misc/output_event-spiking-attention.PNG)
 
