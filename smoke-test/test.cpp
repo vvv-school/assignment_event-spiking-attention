@@ -185,15 +185,8 @@ public:
 
         int score = 0;
         RTF_TEST_REPORT("Inliers | Outliers");
-
-        RTF_TEST_REPORT(Asserter::format("%d | %d", spkchk.inlier[0], spkchk.outlier[0]));
-        if(spkchk.outlier[0] < 1) {
-            RTF_TEST_REPORT("Good (1)");
-            score++;
-        }
-
         for(int i = 1; i < 7; i++) {
-            RTF_TEST_REPORT(Asserter::format("%d | %d", spkchk.inlier[i], spkchk.outlier[i]));
+            RTF_TEST_REPORT(Asserter::format("Section %d: %d | %d", i, spkchk.inlier[i], spkchk.outlier[i]));
             if(spkchk.inlier[i] < 1) {
                 RTF_TEST_REPORT("Missed detection (0)");
             } else if(spkchk.outlier[i] > 2) {
@@ -203,6 +196,12 @@ public:
                 score++;
             }
 
+        }
+        
+        RTF_TEST_REPORT(Asserter::format("Extra Bonus: %d | %d", spkchk.inlier[0], spkchk.outlier[0]));
+        if(spkchk.outlier[0] < 1 && score > 0) {
+            RTF_TEST_REPORT("Good (1)");
+            score++;
         }
 
         //spkchk.printSectionsScores();
