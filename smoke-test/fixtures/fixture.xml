@@ -8,7 +8,7 @@
 
     <module>
         <name> event-saccadic-suppression </name>
-        <parameters> --name /vSacSup --threshold 0.01 </parameters>
+        <parameters> --name /vSacSup --threshold 0.57 </parameters>
         <node> localhost </node>
     </module>
 

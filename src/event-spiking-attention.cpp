@@ -104,9 +104,11 @@ bool spikingModel::threadInit()
     timemap.resize(res.width, res.height);
     timemap.zero();
 
-    if(!q_alloc.open(module_name + "/vBottle:i"))
+    spikes_out.setWriteType(LabelledAE::tag);
+
+    if(!spikes_in.open(module_name + "/vBottle:i"))
         return false;
-    if(!outputPort.open(module_name + "/vBottle:o"))
+    if(!spikes_out.open(module_name + "/vBottle:o"))
         return false;
     if(!debugPort.open(module_name + "/subthreshold:o"))
         return false;
@@ -177,19 +179,26 @@ void spikingModel::resetRegion(int x, int y)
 void spikingModel::run()
 {
     yarp::os::Stamp yarpstamp;
-    vBottle *out_bottle = 0;
     while(!isStopping()) {
 
-        // get the next q from the queueAllocator along with the message timestamp
-        // (remember to return if the q is NULL)
-        // iterate through the q and update the region around the incoming event
-        // if there was a spike (count != 0) create the spike and surrounding
-        // region. Add the spike to the output bottle
-        // send the output bottle on the output port after the entire q has been
-        // processed
+        //fill this vQueue with output spikes (if there are some)
+        vQueue q_out;
 
+        //get the next q
+        const vQueue *q_in = spikes_in.read(yarpstamp);
+        if(!q_in) break;
+
+        // iterate through the q and update the region around the incoming event
+        // using the function updateRegion()
+        // if there was a spike (count != 0) create the spike using the function
+        // spikeAndReset(). This will also reset the subthreshold energy of the
+        // surrounding region. Add the spike to q_out.
 
         //FILL IN THE CODE HERE
+
+        //send the spikes only once the entire spike packet has been processed.
+        if(!q_out.empty())
+            spikes_out.write(q_out, yarpstamp);
 
         //if we are visualising the subthreshold layer create the image and send it
         if(debugPort.getOutputCount()) {
@@ -219,8 +228,7 @@ void spikingModel::run()
 
 void spikingModel::onStop()
 {
-    q_alloc.close();
+    spikes_in.close();
     debugPort.close();
-    outputPort.close();
-    q_alloc.releaseDataLock();
+    spikes_out.close();
 }

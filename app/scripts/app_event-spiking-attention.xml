@@ -30,25 +30,25 @@
 
 <module>
     <name>yarpview</name>
-    <parameters>--name /vviewstream --x 000 --y 600 --synch --w 608 --h 480 </parameters>
+    <parameters>--name /vviewstream --x 000 --y 300 --synch --w 304 --h 240 </parameters>
     <node>localhost</node>
 </module>
 
 <module>
     <name>yarpview</name>
-    <parameters>--name /vviewattention --x 700 --y 600 --synch --w 608 --h 480</parameters>
+    <parameters>--name /vviewattention --x 350 --y 300 --synch --w 304 --h 240</parameters>
     <node>localhost</node>
 </module>
 
 <module>
   <name>yarpview</name>
-  <parameters>--name /icub/view/right --x 0 --y 0 --synch --w 640 --h 512 </parameters>
+  <parameters>--name /icub/view/right --x 0 --y 0 --synch --w 320 --h 256 </parameters>
   <node>localhost</node>
 </module>
 
 <module>
   <name>yarpview</name>
-  <parameters>--name /vviewsubthreshold --x 700 --y 0 --synch --w 640 --h 512 </parameters>
+  <parameters>--name /vviewsubthreshold --x 350 --y 0 --synch --w 320 --h 256 </parameters>
   <node>localhost</node>
 </module>
 

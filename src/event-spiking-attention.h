@@ -30,8 +30,8 @@ private:
     unsigned int count, mean_x, mean_y;
 
     //ouput ports
-    queueAllocator q_alloc;
-    BufferedPort<vBottle> outputPort;
+    vGenReadPort spikes_in;
+    vGenWritePort spikes_out;
     BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelMono> > debugPort;
 
     //private functions
