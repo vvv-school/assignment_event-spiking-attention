@@ -36,8 +36,15 @@ When you are happy with your attention module, you can test your code **Automati
 ## Hints and Tips
 - Only the event-stream from the right camera will be used. The ``vPreProcess`` module is used to split the event-stream into separate left and right streams.
 - The provided _yarpmanager_ application visualises the subthreshold values of the neurons. If processing is slow on your laptop, closing this window (or disconnecting the port) reduce the processing load. The subthreshold visualisation might be useful for debugging purposes.
-- A simple equation for a leaky integrate and fire neuron is `v = 1.0 + v * e^((t-t_p)/tau)`, where v is the subthreshold energy, t is the current time, t\_p is the previous time the neuron was updated, and tau is the decay factor.
+- A simple equation for a leaky integrate and fire neuron is `v = 1.0 + v * e^(-(t-t_p)/tau)`, where v is the subthreshold energy, t is the current time, t\_p is the previous time the neuron was updated, and tau is the decay factor.
 - event timestamps (`ev::vEvent::stamp`) have a maximum value of 2^24. Each increment of the timestamp represents 80ns, therefore the timestamp field will overflow and wrap around every ~1.3 seconds. Therefore to calculate the time difference between two events that have wrapped you can: `if(v2->stamp < v1->stamp) v1->stamp -= ev::vtsHelper::max_stamp;` then `int dt = v2->stamp - v1->stamp` will be positive.
 - If you want modify the default parameters please do so in the configuration of the RFmodule.
 
 ### [How to complete the assignment](https://github.com/vvv-school/vvv-school.github.io/blob/master/instructions/how-to-complete-assignments.md)
+
+## Extension to Live Robot Tests
+If you are keen to test the event-cameras with your developed module we can run the algorithms live on the purple robot and look at the output. The ports to access the data on the robot are identical to the dataset you have been using and so the your module should interface to the robot without modification.
+
+As a (recommended) optional challenge please extend your code with a gaze controller, which you are now experts at after the kinematics lesson. The module is already calculating the attention point in (u, v) coordinates and can be used to control the gaze of the robot. Once a gaze occurs the saccadic suppression should block the event-stream resulting in attention only to independently moving objects.
+
+The material for the gaze controller lesson is available [here](https://github.com/vvv-school/vvv18/blob/master/material/kinematics/kinematics.pdf) if you need a refresher.
