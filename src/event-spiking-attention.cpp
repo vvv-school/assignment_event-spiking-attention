@@ -210,8 +210,8 @@ void spikingModel::run()
                 //int currentspiketime = q->back()->stamp;
                 yarp::sig::ImageOf< yarp::sig::PixelMono > &img = debugPort.prepare();
                 img.resize(energymap.width(), energymap.height());
-                for(int y = 0; y < energymap.height(); y++) {
-                    for(int x = 0; x < energymap.width(); x++) {
+                for(unsigned int y = 0; y < energymap.height(); y++) {
+                    for(unsigned int x = 0; x < energymap.width(); x++) {
                         //updateNeuralModel(x, y, currentspiketime);
                         img(x, y) = (energymap(x, y) * 255.0) / Te;
                     }
